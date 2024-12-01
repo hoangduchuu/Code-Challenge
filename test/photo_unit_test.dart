@@ -1,10 +1,10 @@
-import 'package:code_challenge/features/photos/data/datasources/photo_remote_data_source.dart';
-import 'package:code_challenge/features/photos/data/repositories/photo_repository_impl.dart';
-import 'package:code_challenge/features/photos/presentation/providers/photo_provider.dart';
+import 'package:code_challenge/data/photo_remote_data_source.dart';
+import 'package:code_challenge/data/repository/photo_repository_impl.dart';
 import 'package:code_challenge/models/photo_model.dart';
+import 'package:code_challenge/presentation/screen/photos/provider/photo_provider.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 
 import 'photo_unit_test.mocks.dart';
 
@@ -60,8 +60,7 @@ void main() {
         ),
       ];
 
-      when(mockRepository.getPhotos(start: 0, limit: 100))
-          .thenAnswer((_) async => mockPhotos);
+      when(mockRepository.getPhotos(start: 0, limit: 100)).thenAnswer((_) async => mockPhotos);
 
       // Act
       await photoProvider.loadPhotos();
@@ -84,8 +83,7 @@ void main() {
         ),
       ];
 
-      when(mockRepository.getPhotos(start: 0, limit: 100))
-          .thenAnswer((_) async => mockPhotos);
+      when(mockRepository.getPhotos(start: 0, limit: 100)).thenAnswer((_) async => mockPhotos);
 
       // Act
       await photoProvider.loadPhotos(refresh: true);
@@ -98,8 +96,7 @@ void main() {
 
     test('should handle empty response correctly', () async {
       // Arrange
-      when(mockRepository.getPhotos(start: 0, limit: 100))
-          .thenAnswer((_) async => []);
+      when(mockRepository.getPhotos(start: 0, limit: 100)).thenAnswer((_) async => []);
 
       // Act
       await photoProvider.loadPhotos();
@@ -112,8 +109,7 @@ void main() {
 
     test('should handle error correctly', () async {
       // Arrange
-      when(mockRepository.getPhotos(start: 0, limit: 100))
-          .thenThrow(Exception('Network error'));
+      when(mockRepository.getPhotos(start: 0, limit: 100)).thenThrow(Exception('Network error'));
 
       // Act
       await photoProvider.loadPhotos();

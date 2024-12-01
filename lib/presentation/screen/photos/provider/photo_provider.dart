@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:code_challenge/data/repository/photo_repository_impl.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../../models/photo_model.dart';
-import '../../data/repositories/photo_repository_impl.dart';
 
 class PhotoProvider extends ChangeNotifier {
   final PhotoRepositoryImpl repository;
@@ -12,10 +11,6 @@ class PhotoProvider extends ChangeNotifier {
   bool _hasMore = true;
   int _currentPage = 0;
   final int _limit = 100;
-
-  // 80% scroll threshold for eager loading
-  // change into 100% for lazy loading
-  final double _loadMoreThreshold = 0.8;
 
   PhotoProvider({required this.repository});
 
@@ -42,7 +37,7 @@ class PhotoProvider extends ChangeNotifier {
         limit: _limit,
       );
 
-      if (newPhotos.isEmpty || _photos.length > 400) {
+      if (newPhotos.isEmpty) {
         _hasMore = false;
       } else {
         _photos.addAll(newPhotos);
@@ -55,16 +50,6 @@ class PhotoProvider extends ChangeNotifier {
     } finally {
       _isLoading = false;
       notifyListeners();
-    }
-  }
-
-  void handleScroll(ScrollController scrollController) {
-    final maxScroll = scrollController.position.maxScrollExtent;
-    final currentScroll = scrollController.position.pixels;
-    final threshold = maxScroll * _loadMoreThreshold;
-
-    if (currentScroll >= threshold && !_isLoading && _hasMore) {
-      loadPhotos();
     }
   }
 }
