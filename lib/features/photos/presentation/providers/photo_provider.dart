@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../../../models/photo_model.dart';
 import '../../data/repositories/photo_repository_impl.dart';
@@ -48,7 +49,9 @@ class PhotoProvider extends ChangeNotifier {
         _currentPage++;
       }
     } catch (e) {
-      print('Error loading photos: $e');
+      if (kDebugMode) {
+        print('Error loading photos: $e');
+      }
     } finally {
       _isLoading = false;
       notifyListeners();

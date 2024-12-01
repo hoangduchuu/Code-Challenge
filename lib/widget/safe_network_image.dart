@@ -8,12 +8,12 @@ class SafeNetworkImage extends StatelessWidget {
   final BoxFit? fit;
 
   const SafeNetworkImage({
-    Key? key,
+    super.key,
     required this.imageUrl,
     this.width,
     this.height,
     this.fit,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
