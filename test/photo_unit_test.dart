@@ -60,7 +60,7 @@ void main() {
         ),
       ];
 
-      when(mockRepository.getPhotos(start: 0, limit: 10))
+      when(mockRepository.getPhotos(start: 0, limit: 100))
           .thenAnswer((_) async => mockPhotos);
 
       // Act
@@ -69,7 +69,7 @@ void main() {
       // Assert
       expect(photoProvider.photos, mockPhotos);
       expect(photoProvider.isLoading, false);
-      verify(mockRepository.getPhotos(start: 0, limit: 10)).called(1);
+      verify(mockRepository.getPhotos(start: 0, limit: 100)).called(1);
     });
 
     test('refresh should clear existing photos and load new ones', () async {
@@ -84,7 +84,7 @@ void main() {
         ),
       ];
 
-      when(mockRepository.getPhotos(start: 0, limit: 10))
+      when(mockRepository.getPhotos(start: 0, limit: 100))
           .thenAnswer((_) async => mockPhotos);
 
       // Act
@@ -93,12 +93,12 @@ void main() {
       // Assert
       expect(photoProvider.photos, mockPhotos);
       expect(photoProvider.isLoading, false);
-      verify(mockRepository.getPhotos(start: 0, limit: 10)).called(1);
+      verify(mockRepository.getPhotos(start: 0, limit: 100)).called(1);
     });
 
     test('should handle empty response correctly', () async {
       // Arrange
-      when(mockRepository.getPhotos(start: 0, limit: 10))
+      when(mockRepository.getPhotos(start: 0, limit: 100))
           .thenAnswer((_) async => []);
 
       // Act
@@ -112,7 +112,7 @@ void main() {
 
     test('should handle error correctly', () async {
       // Arrange
-      when(mockRepository.getPhotos(start: 0, limit: 10))
+      when(mockRepository.getPhotos(start: 0, limit: 100))
           .thenThrow(Exception('Network error'));
 
       // Act
