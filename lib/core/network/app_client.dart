@@ -5,6 +5,8 @@ class ApiClient {
 
   ApiClient() : _dio = Dio() {
     _dio.options.baseUrl = 'https://jsonplaceholder.typicode.com';
+    // timeout = 5s
+    _dio.options.connectTimeout = const Duration(seconds: 5);
   }
 
   Future<Response> get(String path, {Map<String, dynamic>? queryParameters}) async {

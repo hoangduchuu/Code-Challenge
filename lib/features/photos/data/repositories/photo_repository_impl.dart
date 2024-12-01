@@ -9,10 +9,6 @@ class PhotoRepositoryImpl implements PhotoRepository {
 
   @override
   Future<List<PhotoModel>> getPhotos({required int start, required int limit}) async {
-    try {
-      return await remoteDataSource.getPhotos(start: start, limit: limit);
-    } catch (e) {
-      throw Exception('Failed to get photos: $e');
-    }
+    return await remoteDataSource.getPhotos(start: start, limit: limit);
   }
 }

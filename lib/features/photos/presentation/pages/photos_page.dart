@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:code_challenge/widget/safe_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/photo_provider.dart';
@@ -49,13 +50,22 @@ class _PhotosPageState extends State<PhotosPage> {
             onRefresh: () => provider.loadPhotos(refresh: true),
             child: ListView.builder(
               controller: _scrollController,
-              itemCount: provider.photos.length + (provider.hasMore ? 1 : 0),
+              itemCount: provider.photos.length + 1, // Always add 1 for the footer
               itemBuilder: (context, index) {
                 if (index >= provider.photos.length) {
-                  return const Center(
+                  // Show loading indicator or end of data message
+                  return Center(
                     child: Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: CircularProgressIndicator(),
+                      padding: const EdgeInsets.all(16.0),
+                      child: provider.hasMore
+                          ? const CircularProgressIndicator()
+                          : const Text(
+                              'No more data',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
+                            ),
                     ),
                   );
                 }
@@ -64,12 +74,11 @@ class _PhotosPageState extends State<PhotosPage> {
                 return Card(
                   margin: const EdgeInsets.all(8.0),
                   child: ListTile(
-                    leading: CachedNetworkImage(
+                    leading: SafeNetworkImage(
                       imageUrl: photo.thumbnailUrl,
                       width: 50,
                       height: 50,
                       fit: BoxFit.cover,
-                      errorWidget: (context, url, error) => const Icon(Icons.error),
                     ),
                     title: Text(photo.title),
                     subtitle: Text('ID: ${photo.id}'),
