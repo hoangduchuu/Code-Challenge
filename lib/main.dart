@@ -1,7 +1,7 @@
 import 'package:code_challenge/core/di/service_locator.dart';
+import 'package:code_challenge/presentation/screen/bluethooth/bluetooth_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'presentation/screen/photos/photos_screen.dart';
 
 void main() {
   setupLocator();
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const PhotoScreen(),
+      home: const BluetoothScreen(),
     );
   }
 }

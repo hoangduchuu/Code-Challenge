@@ -52,6 +52,8 @@ dev_dependencies:
   mockito: ^5.4.4
   build_runner: ^2.4.0
   get_it: ^8.0.2
+  flutter_reactive_ble: ^5.3.1
+  flutter_blue_plus: ^1.34.5
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
