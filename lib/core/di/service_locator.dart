@@ -6,7 +6,7 @@ import 'package:code_challenge/domain/bluetooth_repository.dart';
 import 'package:code_challenge/presentation/screen/bluethooth/provider/bluetooth_provider.dart';
 import 'package:code_challenge/presentation/screen/photos/provider/photo_provider.dart';
 import 'package:code_challenge/service/bluetooth/bluetooth_interface.dart';
-import 'package:code_challenge/service/bluetooth/flutter_blue_plus/blue_plus_impl.dart';
+import 'package:code_challenge/service/bluetooth/flutter_reactive_ble/bluethooth_reactive_ble_impl.dart';
 // ignore: depend_on_referenced_packages
 import 'package:get_it/get_it.dart';
 
@@ -20,8 +20,8 @@ void setupLocator() {
   locator.registerLazySingleton<PhotoRemoteDataSource>(() => PhotoRemoteDataSourceImpl(apiClient: locator()));
 
   // Register Bluetooth Interface
-  // locator.registerLazySingleton<IBluetoothInterface>(() => BluetoothReactiveBleImpl());
-  locator.registerLazySingleton<IBluetoothInterface>(() => BluetoothBluePlusImpl());
+  locator.registerLazySingleton<IBluetoothInterface>(() => BluetoothReactiveBleImpl());
+  // locator.registerLazySingleton<IBluetoothInterface>(() => BluetoothBluePlusImpl());
 
   // Register Repositories
   locator.registerLazySingleton<PhotoRepositoryImpl>(() => PhotoRepositoryImpl(remoteDataSource: locator()));
