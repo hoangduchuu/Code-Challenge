@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:code_challenge/service/bluetooth/bluetooth_interface.dart';
 import 'package:code_challenge/service/bluetooth/model/bluetooth_device_model.dart';
 import 'package:code_challenge/service/bluetooth/model/connection_state.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 
 class BluetoothReactiveBleImpl implements IBluetoothInterface {
@@ -14,6 +15,10 @@ class BluetoothReactiveBleImpl implements IBluetoothInterface {
   final Map<String, ConnectionState> _deviceConnectionStates = {};
 
   BluetoothReactiveBleImpl() : _ble = FlutterReactiveBle();
+
+  // Add this constructor for testing
+  @visibleForTesting
+  BluetoothReactiveBleImpl.withBle(this._ble);
 
   @override
   Future<bool> initialize() async {
