@@ -3,6 +3,7 @@
 **Flutter Code Challenge** is a mobile application for managing Bluetooth devices and displaying a paginated photo gallery.
 
 Submitted by: Hoang Duc Huu
+
 Time spent: **2** weeks spent in total
 
 
