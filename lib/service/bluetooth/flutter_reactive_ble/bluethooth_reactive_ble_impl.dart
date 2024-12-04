@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:code_challenge/service/bluetooth/bluetooth_interface.dart';
+import 'package:code_challenge/service/bluetooth/filter.dart';
 import 'package:code_challenge/service/bluetooth/model/bluetooth_device_model.dart';
 import 'package:code_challenge/service/bluetooth/model/connection_state.dart';
 import 'package:flutter/foundation.dart';
@@ -66,7 +67,7 @@ class BluetoothReactiveBleImpl implements IBluetoothInterface {
           discoveredDevices.add(bleDevice);
         }
 
-        _deviceController.add(List.from(discoveredDevices));
+        _deviceController.add(BluetoothDeviceFilter.filterDevices(discoveredDevices));
       });
     } catch (e) {
       rethrow;

@@ -2,6 +2,8 @@
 
 import 'dart:async';
 import 'package:code_challenge/service/bluetooth/bluetooth_interface.dart';
+import 'package:code_challenge/service/bluetooth/filter.dart';
+
 // ignore: depend_on_referenced_packages
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import '../model/bluetooth_device_model.dart';
@@ -38,8 +40,9 @@ class BluetoothBluePlusImpl implements IBluetoothInterface {
   }
 
   @override
-  Stream<bool> isEnabled() => FlutterBluePlus.adapterState
-      .map((state) => state == BluetoothAdapterState.on);
+  Stream<bool> isEnabled() =>
+      FlutterBluePlus.adapterState
+          .map((state) => state == BluetoothAdapterState.on);
 
   @override
   Future<void> startScan() async {
@@ -69,7 +72,8 @@ class BluetoothBluePlusImpl implements IBluetoothInterface {
           );
         }).toList();
 
-        _deviceController.add(devices);
+
+        _deviceController.add(BluetoothDeviceFilter.filterDevices(devices));
       });
 
       _scanTimeout = Timer(const Duration(seconds: 30), stopScan);
@@ -146,13 +150,14 @@ class BluetoothBluePlusImpl implements IBluetoothInterface {
 
     final allDevices = {...connectedDevices, ...systemDevices};
 
-    return allDevices.map((device) => BluetoothDeviceModel(
-      id: device.remoteId.str,
-      name: device.platformName.isEmpty ? 'Unknown Device' : device.platformName,
-      isConnected: connectedDevices.contains(device),
-      lastConnected: DateTime.now(),
-      rssi: 0,
-    )).toList();
+    return allDevices.map((device) =>
+        BluetoothDeviceModel(
+          id: device.remoteId.str,
+          name: device.platformName.isEmpty ? 'Unknown Device' : device.platformName,
+          isConnected: connectedDevices.contains(device),
+          lastConnected: DateTime.now(),
+          rssi: 0,
+        )).toList();
   }
 
   @override

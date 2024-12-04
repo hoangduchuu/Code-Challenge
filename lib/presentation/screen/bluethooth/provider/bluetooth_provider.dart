@@ -26,9 +26,15 @@ class BluetoothProvider extends ChangeNotifier {
       await _repository.initialize();
 
       // Listen to bluetooth state
-      _repository.isEnabled.listen((enabled) {
+      _repository.isEnabled.listen((enabled) async {
         _isEnabled = enabled;
         notifyListeners();
+        if (_isEnabled) {
+          await startScan();
+        } else {
+          _discoveredDevices.clear();
+          notifyListeners();
+        }
       });
 
       // Listen to discovered devices
@@ -36,6 +42,9 @@ class BluetoothProvider extends ChangeNotifier {
         _discoveredDevices = devices;
         notifyListeners();
       });
+
+      // Automatically start scanning
+      await startScan();
     } catch (e) {
       debugPrint('Error initializing bluetooth: $e');
     }

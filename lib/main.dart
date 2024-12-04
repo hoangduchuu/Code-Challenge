@@ -1,10 +1,12 @@
 import 'package:code_challenge/core/di/service_locator.dart';
+import 'package:code_challenge/data/database/local_setup/local_database_service.dart';
 import 'package:code_challenge/presentation/screen/bluethooth/bluetooth_screen.dart';
 import 'package:flutter/material.dart';
 
-
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
+  await locator.get<LocalDatabaseService>().initialize();
   runApp(const MyApp());
 }
 

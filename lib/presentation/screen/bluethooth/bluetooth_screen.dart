@@ -14,16 +14,7 @@ class BluetoothScreen extends StatelessWidget {
       builder: (context, child) => Scaffold(
         appBar: AppBar(
           title: const Text('Bluetooth'),
-          actions: [
-            Switch(
-              value: context.watch<BluetoothProvider>().isEnabled,
-              onChanged: (value) {
-                if (value) {
-                  context.read<BluetoothProvider>().enableBluetooth();
-                }
-              },
-            ),
-          ],
+          actions: [],
         ),
         body: RefreshIndicator(
           onRefresh: () => context.read<BluetoothProvider>().startScan(),
@@ -41,10 +32,6 @@ class BluetoothScreen extends StatelessWidget {
               ),
             ],
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => context.read<BluetoothProvider>().startScan(),
-          child: const Icon(Icons.bluetooth_searching),
         ),
       ),
     );
@@ -115,7 +102,7 @@ class DiscoveredDevicesList extends StatelessWidget {
           return const Center(
             child: Padding(
               padding: EdgeInsets.all(16),
-              child: Text('No devices found. Pull to scan for devices.'),
+              child: Text('No devices found'),
             ),
           );
         }

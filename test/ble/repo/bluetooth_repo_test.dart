@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:code_challenge/data/database/handler/stored_deivce_handler.dart';
 import 'package:code_challenge/data/repository/bluetooth_repository_impl.dart';
 import 'package:code_challenge/service/bluetooth/bluetooth_interface.dart';
 import 'package:code_challenge/service/bluetooth/model/bluetooth_device_model.dart';
@@ -11,14 +12,17 @@ import 'package:mockito/mockito.dart';
 import 'bluetooth_repo_test.mocks.dart';
 import 'mock_data.dart';
 
-@GenerateMocks([IBluetoothInterface])
+
+@GenerateMocks([IBluetoothInterface, StoredDeviceHandler])
 void main() {
   late MockIBluetoothInterface mockBluetooth;
+  late MockStoredDeviceHandler mockHandler;
   late BluetoothRepositoryImpl repository;
 
   setUp(() {
     mockBluetooth = MockIBluetoothInterface();
-    repository = BluetoothRepositoryImpl(mockBluetooth);
+    mockHandler = MockStoredDeviceHandler();
+    repository = BluetoothRepositoryImpl(mockBluetooth, mockHandler);
   });
 
   group('BluetoothRepositoryImpl', () {

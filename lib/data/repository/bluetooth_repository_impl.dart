@@ -1,3 +1,6 @@
+// ignore_for_file: unused_field
+
+import 'package:code_challenge/data/database/handler/stored_deivce_handler.dart';
 import 'package:code_challenge/domain/bluetooth_repository.dart';
 import 'package:code_challenge/service/bluetooth/bluetooth_interface.dart';
 import 'package:code_challenge/service/bluetooth/model/bluetooth_device_model.dart';
@@ -5,10 +8,11 @@ import 'package:code_challenge/service/bluetooth/model/connection_state.dart';
 
 class BluetoothRepositoryImpl implements BluetoothRepository {
   final IBluetoothInterface _bluetooth;
+  final StoredDeviceHandler _deviceHandler;
 
   // final Isar _isar;
 
-  BluetoothRepositoryImpl(this._bluetooth);
+  BluetoothRepositoryImpl(this._bluetooth, this._deviceHandler);
 
   @override
   Future<bool> initialize() => _bluetooth.initialize();

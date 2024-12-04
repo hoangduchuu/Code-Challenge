@@ -1,5 +1,3 @@
-// lib/features/bluetooth/domain/models/bluetooth_device_model.dart
-
 class BluetoothDeviceModel {
   final String id;
   final String name;
