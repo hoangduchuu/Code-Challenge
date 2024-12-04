@@ -1,4 +1,4 @@
-import 'package:code_challenge/data/photo_remote_data_source.dart';
+import 'package:code_challenge/data/local/photo_remote_data_source.dart';
 import 'package:code_challenge/data/repository/photo_repository_impl.dart';
 import 'package:code_challenge/models/photo_model.dart';
 import 'package:code_challenge/presentation/screen/photos/provider/photo_provider.dart';

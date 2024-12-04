@@ -1,6 +1,6 @@
 import '../../domain/photo_repository.dart';
 import '../../models/photo_model.dart';
-import '../photo_remote_data_source.dart';
+import '../local/photo_remote_data_source.dart';
 
 class PhotoRepositoryImpl implements PhotoRepository {
   final PhotoRemoteDataSource remoteDataSource;
