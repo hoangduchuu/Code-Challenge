@@ -139,10 +139,10 @@ class DeviceListTile extends StatelessWidget {
           Text('ID: ${device.id}'),
           Text('Signal Strength: ${device.rssi} dBm'),
           Text(
-            'Connect status ${device.isConnected}',
+            device.isConnected ? 'Connected' : 'Disconnected',
             style: TextStyle(
               color: device.isConnected ? Colors.green : Colors.red,
-              fontSize: device.isConnected ? 20 : 14,
+              fontWeight: device.isConnected ? FontWeight.bold : FontWeight.normal,
             ),
           ),
         ],
