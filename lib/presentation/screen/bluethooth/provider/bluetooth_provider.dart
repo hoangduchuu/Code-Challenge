@@ -93,7 +93,7 @@ class BluetoothProvider extends ChangeNotifier {
 
   @override
   void dispose() {
-    // _repository.dispose();
+    _repository.dispose();
     super.dispose();
   }
 }

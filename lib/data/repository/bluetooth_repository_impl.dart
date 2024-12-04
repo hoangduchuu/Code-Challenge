@@ -39,4 +39,9 @@ class BluetoothRepositoryImpl implements BluetoothRepository {
 
   @override
   Stream<ConnectionState> connectionStateStream(String deviceId) => _bluetooth.connectionStateStream(deviceId);
+
+  @override
+  void dispose() {
+    _bluetooth.dispose();
+  }
 }

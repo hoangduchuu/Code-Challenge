@@ -22,6 +22,8 @@ abstract class BluetoothRepository {
 
   Stream<ConnectionState> connectionStateStream(String deviceId);
 
+  dispose();
+
   // Future<List<StoredDevice>> getStoredDevices();
 
   // Future<void> saveDevice(StoredDevice device);
