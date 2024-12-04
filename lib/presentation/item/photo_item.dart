@@ -1,5 +1,5 @@
 import 'package:code_challenge/models/photo_model.dart';
-import 'package:code_challenge/widget/safe_network_image.dart';
+import 'package:code_challenge/presentation/widget/safe_network_image.dart';
 import 'package:flutter/material.dart';
 
 class PhotoItem extends StatelessWidget {
