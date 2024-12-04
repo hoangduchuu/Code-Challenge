@@ -5,7 +5,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
-import 'package:code_challenge/data/photo_remote_data_source.dart' as _i2;
+import 'package:code_challenge/data/local/photo_remote_data_source.dart' as _i2;
 import 'package:code_challenge/data/repository/photo_repository_impl.dart'
     as _i3;
 import 'package:code_challenge/models/photo_model.dart' as _i5;
