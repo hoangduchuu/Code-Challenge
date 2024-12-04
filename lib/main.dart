@@ -1,29 +1,13 @@
+import 'package:code_challenge/core/di/service_locator.dart';
+import 'package:code_challenge/data/database/local_setup/local_database_service.dart';
+import 'package:code_challenge/navigation/router.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import 'core/network/app_client.dart';
-import 'features/photos/data/datasources/photo_remote_data_source.dart';
-import 'features/photos/data/repositories/photo_repository_impl.dart';
-import 'features/photos/presentation/pages/photos_page.dart';
-import 'features/photos/presentation/providers/photo_provider.dart';
-
-void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => PhotoProvider(
-            repository: PhotoRepositoryImpl(
-              remoteDataSource: PhotoRemoteDataSourceImpl(
-                apiClient: ApiClient(),
-              ),
-            ),
-          ),
-        ),
-      ],
-      child: const MyApp(),
-    ),
-  );
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  setupLocator();
+  await locator.get<LocalDatabaseService>().initialize();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -32,14 +16,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const PhotosPage(),
+      routerConfig: router,
     );
   }
 }
-
