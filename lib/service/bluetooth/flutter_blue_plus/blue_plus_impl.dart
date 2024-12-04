@@ -11,11 +11,18 @@ import '../model/connection_state.dart';
 
 class BluetoothBluePlusImpl implements IBluetoothInterface {
   Timer? _scanTimeout;
-  final _deviceController = StreamController<List<BluetoothDeviceModel>>.broadcast();
+  StreamController<List<BluetoothDeviceModel>>? _deviceController;
   final Map<String, StreamSubscription> _connectionSubscriptions = {};
+
+  void _ensureControllerIsActive() {
+    if (_deviceController == null || _deviceController!.isClosed) {
+      _deviceController = StreamController<List<BluetoothDeviceModel>>.broadcast();
+    }
+  }
 
   @override
   Future<bool> initialize() async {
+    _ensureControllerIsActive();
     try {
       return await FlutterBluePlus.isSupported;
     } catch (e) {
@@ -46,6 +53,7 @@ class BluetoothBluePlusImpl implements IBluetoothInterface {
 
   @override
   Future<void> startScan() async {
+    _ensureControllerIsActive();
     try {
       if (await FlutterBluePlus.isScanning.first) {
         await stopScan();
@@ -56,7 +64,7 @@ class BluetoothBluePlusImpl implements IBluetoothInterface {
         androidScanMode: AndroidScanMode.lowLatency,
       );
 
-      FlutterBluePlus.scanResults.listen((results) {
+      _connectionSubscriptions['scanResults'] = FlutterBluePlus.scanResults.listen((results) {
         final devices = results.map((result) {
           final isConnected = FlutterBluePlus.connectedDevices
               .any((d) => d.remoteId.str == result.device.remoteId.str);
@@ -73,7 +81,7 @@ class BluetoothBluePlusImpl implements IBluetoothInterface {
         }).toList();
 
 
-        _deviceController.add(BluetoothDeviceFilter.filterDevices(devices));
+        _deviceController!.add(BluetoothDeviceFilter.filterDevices(devices));
       });
 
       _scanTimeout = Timer(const Duration(seconds: 30), stopScan);
@@ -89,7 +97,10 @@ class BluetoothBluePlusImpl implements IBluetoothInterface {
   }
 
   @override
-  Stream<List<BluetoothDeviceModel>> discoveredDevices() => _deviceController.stream;
+  Stream<List<BluetoothDeviceModel>> discoveredDevices() {
+    _ensureControllerIsActive();
+    return _deviceController!.stream;
+  }
 
   @override
   Future<bool> connect(String deviceId) async {
@@ -162,7 +173,7 @@ class BluetoothBluePlusImpl implements IBluetoothInterface {
 
   @override
   void dispose() {
-    _deviceController.close();
+    _deviceController!.close();
     _scanTimeout?.cancel();
     for (var subscription in _connectionSubscriptions.values) {
       subscription.cancel();
